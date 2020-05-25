@@ -16,7 +16,6 @@ class Leishmania(object):
 
         Leishmania.alive.append(self)
 
-
     def Movement_Leish(self):
         """Leishmania will move when iterated, one step, this place will be
         randomly chosen from its first neighbors """
@@ -149,9 +148,9 @@ def SecondMooreNeighborhood(agent):
     return neighborhood
 
 #Other functions
-def Recruitment(coordinates, num_macro, recruit_rate):
-    '''Create new macrophages, creates recruit_rate percentage of original population'''
-    new_macros = int(num_macro*recruit_rate)
+def Recruitment(coordinates, current_population, recruit_rate):
+    '''Create new macrophages, creates recruit_rate percentage of current population'''
+    new_macros = int(current_population*recruit_rate)
     new_coords = random.sample(coordinates, new_macros)
 
     for coor in new_coords:
@@ -186,7 +185,8 @@ def DrawSpace():
     return Space
 
 
-def GraphPopulations(populations, p, num_leish, num_macro):
+def GraphPopulations(populations, p, num_leish, num_macro, save):
+    """Draw graph showing population evolution. """
     plt.figure()
     plt.title('Population Evolution (p = {}, M = {}, L = {})'.format(p, populations['Macrophages'][0],
                                                                         populations['Leishmanias'][0]))
@@ -201,7 +201,9 @@ def GraphPopulations(populations, p, num_leish, num_macro):
     plt.plot(t, populations['Macrophages'], label = 'Macrophages')
     plt.legend(loc = 'upper left')
 
-    #plt.savefig('p'+ str(p) + 'M'+ str(num_macro)+ 'L'+ str(num_leish)+ '.png')
+    if save:
+        plt.savefig(f"p{p}M{num_macro}L{num_leish}.png")
+
     plt.show()
     plt.close()
 

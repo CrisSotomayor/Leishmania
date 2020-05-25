@@ -6,7 +6,7 @@ import time
 
 
 def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
-                len_infection=28, size=100):
+                len_infection=28, size=500, draw=False, save=False):
     """Run simulation.
 
     Parameters:
@@ -21,7 +21,8 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
         steps (int): number of "steps" in a day, default is 96 for 15 minute steps
         len_infection (int): days infected before releasing leish
         size (int): space considered will be grid size x size
-
+        draw (bool): default False. If True, draws space at the end of every day.
+        save (bool): default False. If true, save graphs.
 
         """
     start_time = time.time()
@@ -95,7 +96,7 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
         # Recruit once each day
         if i%steps == 0 and recruitment == True:
             recruit_days += 1
-            cll.Recruitment(coordinates, num_macro, recruit_rate)
+            cll.Recruitment(coordinates, len(cll.Macrophage.alive), recruit_rate)
         # Stop after a week
         if recruit_days > 7:
             recruitment = False
@@ -106,11 +107,11 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
             populations['Healthy'].append(len(cll.Macrophage.alive) - len(cll.Macrophage.infected))
             populations['Infected'].append(len(cll.Macrophage.infected))
             populations['Leishmanias'].append(len(cll.Leishmania.alive))
-            cll.DrawSpace()
+            if draw is True:
+                cll.DrawSpace()
 
     # Once simulation is done, create graph, print final amounts and time run
-    cll.GraphPopulations(populations, p, num_leish, num_macro)
+    cll.GraphPopulations(populations, p, num_leish, num_macro, save)
     print('Leishmanias = {}'.format(len(cll.Leishmania.alive)), '\nMacrophages = {}'.format(len(cll.Macrophage.alive)))
-    print('{} days'.format(round((i+1)/steps, 2)))
     end_time = time.time()
     print(round(end_time-start_time, 2), ' seconds')
