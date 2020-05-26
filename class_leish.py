@@ -60,15 +60,11 @@ class Macrophage(object):
 
     def Search_Leish(self):
         """Scan Moore neighborhood with range 3, if Leish found, track it"""
-        neighborhood = []
+        neighborhood = ThirdMooreNeighborhood(self)
         coord = self.coord
         N = self.spacesize
 
         # Get third Moore neighborhood, exclude own coordinate
-        for i in range(-3,4):
-            for j in range(-3,4):
-                if i!=0 or j!=0:
-                    neighborhood.append(np.array(((i+coord[0])%N,(j+coord[1])%N)))
 
         # To reduce running time, look only in corresponding Moore neighborhood cols
         interval = [(coord[0]+i)%N for i in range(-3,4)]
@@ -116,7 +112,7 @@ class Macrophage(object):
 
     def Leish_Reproduction(self):
         '''Infected Macrophage dies, releasing new Leish'''
-        neighborhood = SecondMooreNeighborhood(self)
+        neighborhood = SecondMooreNeighborhood(self) + ThirdMooreNeighborhood(self)
         for coor in neighborhood:
             Leishmania(coor)
         Macrophage.alive.remove(self)
@@ -148,6 +144,17 @@ def SecondMooreNeighborhood(agent):
 
     return neighborhood
 
+def ThirdMooreNeighborhood(agent):
+    '''Moore neighborhood of coordinate with range 3, excluding neighborhood with range 2'''
+    coordinate = agent.coord
+    N = agent.spacesize
+    auxi = [[3,-2],[3,-1],[3,1],[3,0],[3,-3],[3,3],[0,3],[0,-3],[1,3],[1,-3],
+             [-1,-3],[2,-3],[2,3],[-3,-3],[-3,3],[-3,2],[3,2],[-2,3],[-1,3],[-3,0],
+             [-3,1],[-3,-1],[-3,-2],[-2,-3]]
+    neighborhood = [np.array(np.array(((i[0]+coordinate[0])%N,(i[1]+coordinate[1])%N))) for i in auxi]
+
+    return neighborhood
+    
 #Other functions
 def Recruitment(coordinates, current_population, recruit_rate):
     '''Create new macrophages, creates recruit_rate percentage of current population'''
