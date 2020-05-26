@@ -22,7 +22,7 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
         len_infection (int): days infected before releasing leish
         size (int): space considered will be grid size x size
         draw (bool): default False. If True, draws space at the end of every day.
-        save (bool): default False. If true, save graphs.
+        save (bool): default False. If true, save graphs and csv with graph data.
 
         """
     start_time = time.time()
@@ -98,7 +98,7 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
             recruit_days += 1
             cll.Recruitment(coordinates, len(cll.Macrophage.alive), recruit_rate)
         # Stop after a week
-        if recruit_days > 7:
+        if recruit_days >= 7:
             recruitment = False
 
 

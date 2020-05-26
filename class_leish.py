@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+import csv
 
 
 class Leishmania(object):
@@ -151,7 +152,7 @@ def SecondMooreNeighborhood(agent):
 def Recruitment(coordinates, current_population, recruit_rate):
     '''Create new macrophages, creates recruit_rate percentage of current population'''
     new_macros = int(current_population*recruit_rate)
-    new_coords = random.sample(coordinates, new_macros)
+    new_coords = random.choices(coordinates, k=new_macros)
 
     for coor in new_coords:
         Macrophage(coor)
@@ -185,11 +186,10 @@ def DrawSpace():
     return Space
 
 
-def GraphPopulations(populations, p, num_leish, num_macro, save):
-    """Draw graph showing population evolution. """
+def GraphPopulations(populations, p, recruit_rate, save):
+    """Draw graph showing population evolution, if save, saves graph and csv. """
     plt.figure()
-    plt.title('Population Evolution (p = {}, M = {}, L = {})'.format(p, populations['Macrophages'][0],
-                                                                        populations['Leishmanias'][0]))
+    plt.title(f"Population Evolution (p = {p}, r={recruit_rate})")
     plt.ylabel('Population')
     plt.xlabel('Days')
 
@@ -202,7 +202,12 @@ def GraphPopulations(populations, p, num_leish, num_macro, save):
     plt.legend(loc = 'upper left')
 
     if save:
-        plt.savefig(f"p{p}M{num_macro}L{num_leish}.png")
+        plt.savefig(f"p{p}r{recruit_rate}.png")
+        with open(f"p{p}r{r}.csv", "wb") as outfile:
+           writer = csv.writer(outfile)
+           writer.writerow(populations.keys())
+           writer.writerows(zip(*populations.values()))
+
 
     plt.show()
     plt.close()
