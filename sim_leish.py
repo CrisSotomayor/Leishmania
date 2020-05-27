@@ -33,6 +33,7 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
     cll.Leishmania.alive = []
     cll.Leishmania.alive_dict = {i:[] for i in range(size)}
     cll.Macrophage.alive = []
+    cll.Macrophage.infected = []
     # Data for graphs
     populations = {'Macrophages':[], 'Healthy':[], 'Infected':[], 'Leishmanias':[]}
     # Keep track of recruitment days and if recruitment is active

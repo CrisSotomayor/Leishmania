@@ -154,7 +154,7 @@ def ThirdMooreNeighborhood(agent):
     neighborhood = [np.array(np.array(((i[0]+coordinate[0])%N,(i[1]+coordinate[1])%N))) for i in auxi]
 
     return neighborhood
-    
+
 #Other functions
 def Recruitment(coordinates, current_population, recruit_rate):
     '''Create new macrophages, creates recruit_rate percentage of current population'''
@@ -210,7 +210,7 @@ def GraphPopulations(populations, p, recruit_rate, save):
 
     if save:
         plt.savefig(f"p{p}r{recruit_rate}.png")
-        with open(f"p{p}r{recruit_rate}.csv", "wb") as outfile:
+        with open(f"p{p}r{recruit_rate}.csv", "w", newline='') as outfile:
            writer = csv.writer(outfile)
            writer.writerow(populations.keys())
            writer.writerows(zip(*populations.values()))
