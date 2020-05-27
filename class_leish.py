@@ -210,7 +210,7 @@ def GraphPopulations(populations, p, recruit_rate, save):
 
     if save:
         plt.savefig(f"p{p}r{recruit_rate}.png")
-        with open(f"p{p}r{r}.csv", "wb") as outfile:
+        with open(f"p{p}r{recruit_rate}.csv", "wb") as outfile:
            writer = csv.writer(outfile)
            writer.writerow(populations.keys())
            writer.writerows(zip(*populations.values()))

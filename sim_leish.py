@@ -6,7 +6,7 @@ import time
 
 
 def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
-                len_infection=28, size=500, draw=False, save=False):
+                len_infection=28, size=100, draw=False, save=False):
     """Run simulation.
 
     Parameters:
@@ -111,7 +111,7 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
                 cll.DrawSpace()
 
     # Once simulation is done, create graph, print final amounts and time run
-    cll.GraphPopulations(populations, p, num_leish, num_macro, save)
+    cll.GraphPopulations(populations, p, recruit_rate, save)
     print('Leishmanias = {}'.format(len(cll.Leishmania.alive)), '\nMacrophages = {}'.format(len(cll.Macrophage.alive)))
     end_time = time.time()
     print(round(end_time-start_time, 2), ' seconds')
