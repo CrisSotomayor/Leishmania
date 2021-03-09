@@ -195,7 +195,7 @@ def DrawSpace():
 
 def GraphPopulations(populations, p, recruit_rate, save):
     """Draw graph showing population evolution, if save, saves graph and csv. """
-    plt.figure()
+    fig1 = plt.figure()
     plt.title(f"Population Evolution (p = {p}, r={recruit_rate})")
     plt.ylabel('Population')
     plt.xlabel('Days')
@@ -203,23 +203,35 @@ def GraphPopulations(populations, p, recruit_rate, save):
     t = np.linspace(0, len(populations['Leishmanias']) - 1, len(populations['Leishmanias']))
 
     plt.plot(t, populations['Leishmanias'], label = 'Leishmanias')
-    plt.plot(t, populations['Healthy'], label = 'Healthy')
-    plt.plot(t, populations['Infected'], label = 'Infected')
     plt.plot(t, populations['Macrophages'], label = 'Macrophages')
     plt.legend(loc = 'upper left')
 
+
+    fig2 = plt.figure()
+    plt.title(f"Macrohage Populations Evolution (p = {p}, r={recruit_rate})")
+    plt.ylabel('Population')
+    plt.xlabel('Days')
+
+    t_aux = np.linspace(0, len(populations['Macrophages']) - 1, len(populations['Macrophages']))
+
+    plt.plot(t_aux, populations['Healthy'], label = 'Healthy')
+    plt.plot(t_aux, populations['Infected'], label = 'Infected')
+    fig2.plt.legend(loc = 'upper left')
+    
     if save:
-        plt.savefig(f"p{p}r{recruit_rate}.png")
+        fig1.savefig(f"p{p}r{recruit_rate}.png")
+        fig2.savefig(f"macro_p{p}r{recruit_rate}.png")
         with open(f"p{p}r{recruit_rate}.csv", "w", newline='') as outfile:
            writer = csv.writer(outfile)
            writer.writerow(populations.keys())
            writer.writerows(zip(*populations.values()))
 
-
-    plt.show()
+    fig1.show()
+    fig2.show()
     plt.close()
 
     return None
+
 
 
 def Distance(a,b):
