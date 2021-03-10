@@ -3,4 +3,4 @@
 import sim_leish
 
 if __name__ == "__main__":
-    sim_leish.simulation(75, 1500, 0.2, 0.3)
+    sim_leish.simulation(10, 40, 0.2, 0.3)

@@ -218,7 +218,7 @@ def GraphPopulations(populations, p, recruit_rate, save):
 
     plt.plot(t_aux, populations['Healthy'], label = 'Healthy')
     plt.plot(t_aux, populations['Infected'], label = 'Infected')
-    fig2.plt.legend(loc = 'upper left')
+    fig2.legend(loc = 'upper left')
 
     now = datetime.now()
     dtstring = now.strftime("%f")
