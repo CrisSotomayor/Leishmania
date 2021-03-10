@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from datetime import datetime
 import numpy as np
 import random
 import csv
@@ -155,6 +156,7 @@ def ThirdMooreNeighborhood(agent):
 
     return neighborhood
 
+
 #Other functions
 def Recruitment(coordinates, current_population, recruit_rate):
     '''Create new macrophages, creates recruit_rate percentage of current population'''
@@ -217,11 +219,14 @@ def GraphPopulations(populations, p, recruit_rate, save):
     plt.plot(t_aux, populations['Healthy'], label = 'Healthy')
     plt.plot(t_aux, populations['Infected'], label = 'Infected')
     fig2.plt.legend(loc = 'upper left')
+
+    now = datetime.now()
+    dtstring = now.strftime("%f")
     
     if save:
-        fig1.savefig(f"p{p}r{recruit_rate}.png")
-        fig2.savefig(f"macro_p{p}r{recruit_rate}.png")
-        with open(f"p{p}r{recruit_rate}.csv", "w", newline='') as outfile:
+        fig1.savefig(f"p{p}r{recruit_rate}_{dtstring}.png")
+        fig2.savefig(f"macro_p{p}r{recruit_rate}_{dtstring}.png")
+        with open(f"p{p}r{recruit_rate}_{dtstring}.csv", "w", newline='') as outfile:
            writer = csv.writer(outfile)
            writer.writerow(populations.keys())
            writer.writerows(zip(*populations.values()))
@@ -231,7 +236,6 @@ def GraphPopulations(populations, p, recruit_rate, save):
     plt.close()
 
     return None
-
 
 
 def Distance(a,b):
