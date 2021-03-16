@@ -41,6 +41,7 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
     recruitment = False
 
     # Save initial data for graph
+    populations['Time'].append(0)
     populations['Macrophages'].append(num_macro)
     populations['Healthy'].append(num_macro)
     populations['Infected'].append(0) # Initially 0 are infected
@@ -104,6 +105,7 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
 
 
         if (i+1)%steps == 0: # Save data at the end of each day (i+1 to save last iteration)
+            populations['Time'].append(i+1)
             populations['Macrophages'].append(len(cll.Macrophage.alive))
             populations['Healthy'].append(len(cll.Macrophage.alive) - len(cll.Macrophage.infected))
             populations['Infected'].append(len(cll.Macrophage.infected))
