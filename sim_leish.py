@@ -5,7 +5,7 @@ import random
 import time
 
 
-def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
+def simulation(num_leish, num_macro, p, recruit_rate, W, k, days=70, steps=96,
                 len_infection=28, size=100, draw=False, save=False):
     """Run simulation.
 
@@ -29,13 +29,13 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
     #Set size as attribute for Leishmania and Macrophage
     cll.Leishmania.spacesize = size
     cll.Macrophage.spacesize = size
-    #Emmpty alive lists and dict
+    #Empty alive lists and dict
     cll.Leishmania.alive = []
     cll.Leishmania.alive_dict = {i:[] for i in range(size)}
     cll.Macrophage.alive = []
     cll.Macrophage.infected = []
     # Data for graphs
-    populations = {'Macrophages':[], 'Healthy':[], 'Infected':[], 'Leishmanias':[]}
+    populations = {'Time':[],'Macrophages':[], 'Healthy':[], 'Infected':[], 'Leishmanias':[]}
     # Keep track of recruitment days and if recruitment is active
     recruit_days = 0
     recruitment = False
@@ -98,7 +98,7 @@ def simulation(num_leish, num_macro, p, recruit_rate, days=70, steps=96,
         # Recruit once each day
         if i%steps == 0 and recruitment == True:
             recruit_days += 1
-            cll.Recruitment(coordinates, len(cll.Macrophage.alive), recruit_rate)
+            cll.Recruitment(coordinates, len(cll.Macrophage.alive), recruit_rate, W, k)
         # Stop after a week
         if recruit_days >= 7:
             recruitment = False
