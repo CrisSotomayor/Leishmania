@@ -158,10 +158,10 @@ def ThirdMooreNeighborhood(agent):
 
 
 #Other functions
-def Recruitment(coordinates, current_population, recruit_rate, W, k):
+def Recruitment(coordinates, current_population, recruit_rate, W, exp):
     '''Create new macrophages, creates recruit_rate percentage of current population'''
-    new = (recruit_rate*current_population**k)/(1+recruit_rate*(current_population**k)*W)
-    new_macros = int()
+    new = (recruit_rate*current_population**exp)/(1+recruit_rate*(current_population**exp)*W)
+    new_macros = int(new)
     new_coords = random.choices(coordinates, k=new_macros)
 
     for coor in new_coords:
